@@ -2,8 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CategoryList {
-    private Map<Integer,int[]> itemLists = new HashMap<>();
-
+    private final Map<Integer,int[]> itemLists = new HashMap<>();
 
     public CategoryList(){
         int cateID1 = 1001;
@@ -15,6 +14,6 @@ public class CategoryList {
     }
 
     public int[] getItemList(int cateID){
-        return (int[])itemLists.get(cateID);
+        return itemLists.get(cateID);
     }
 }

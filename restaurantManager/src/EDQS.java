@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EDQS {
-    private Map<Integer,String> employeeList = new HashMap<>();
+    private final Map<Integer,String> employeeList = new HashMap<>();
 
     public EDQS(){
         int[] employeeIDs = new int[]{1,2,3};

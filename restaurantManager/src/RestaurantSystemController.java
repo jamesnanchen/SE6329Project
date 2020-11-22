@@ -1,9 +1,8 @@
 public class RestaurantSystemController {
-
     private final CategoryList cateList = new CategoryList();
     private final EDQS edqs = new EDQS();
     private Order order;
-    private int orderID = 0;
+    private int orderID = 1;
     private final OrderQueue orderQueue = new OrderQueue();
 
     public boolean login(int userID, String password){
@@ -11,7 +10,7 @@ public class RestaurantSystemController {
     }
 
     public void makeNewOrder(){
-        order = new Order(orderID++);
+        this.order = new Order(orderID++);
     }
 
     public int[] selectCategory(int cateID){
@@ -19,11 +18,12 @@ public class RestaurantSystemController {
     }
 
     public void selectDesiredItem(int itemID){
-        order.makeLineItem(itemID);
+        this.order.makeLineItem(itemID);
     }
 
-    public void finishOrder(Order order){
-        orderQueue.addOrderIntoOrderQueue(order);
-        order.sentToQueue();
+    public void finishOrder(){
+        orderQueue.addOrderIntoOrderQueue(this.order);
+        this.order.sentToQueue();
+        orderQueue.showQueue();
     }
 }

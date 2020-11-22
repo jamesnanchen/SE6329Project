@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class Order {
 
-    private int orderID;
-    private ArrayList<OrderLineItem> orderList = new ArrayList<>();
+    private final int orderID;
+    private final ArrayList<OrderLineItem> orderList = new ArrayList<>();
     private boolean isComplete = false;
 
     public Order(int orderID){
@@ -24,5 +24,12 @@ public class Order {
 
     public boolean inQueue(){
         return isComplete;
+    }
+
+    @Override
+    public String toString() {
+        return "{ orderNumber: " +
+                this.orderID +" "+orderList +
+                '}';
     }
 }

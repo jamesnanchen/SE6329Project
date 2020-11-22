@@ -9,6 +9,6 @@ public class OrderQueue {
     }
 
     public void showQueue(){
-        System.out.println(q.element().getOrderID());
+        System.out.println("Orders in queue: "+q);
     }
 }
