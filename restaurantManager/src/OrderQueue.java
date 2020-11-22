@@ -8,4 +8,7 @@ public class OrderQueue {
         q.add(o);
     }
 
+    public void showQueue(){
+        System.out.println(q.element().getOrderID());
+    }
 }

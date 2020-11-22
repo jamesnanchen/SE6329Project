@@ -1,10 +1,11 @@
+import java.util.HashMap;
 import java.util.Map;
 
 public class EDQS {
-    private Map<Integer,String> employeeList;
+    private Map<Integer,String> employeeList = new HashMap<>();
 
     public EDQS(){
-        int[] employeeIDs = new int[]{01,02,03};
+        int[] employeeIDs = new int[]{1,2,3};
         String[] passwords = {"password01","password02","password03"};
         for(int i =0;i<3;i++){
             employeeList.put(employeeIDs[i],passwords[i]);
