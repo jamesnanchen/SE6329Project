@@ -10,8 +10,11 @@ public class Test {
         else{
             System.out.println("logged in failed");
         }
-        int[] cate = rsc.selectCategory(1001);
-        System.out.println(Arrays.toString(cate));
+        rsc.getTables();
+
+        int cateID = 1001;
+        int[] cate = rsc.selectCategory(cateID);
+        System.out.println("Here are the items in category: "+cateID+"\n"+Arrays.toString(cate));
 
         rsc.makeNewOrder();
 
