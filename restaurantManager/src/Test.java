@@ -10,7 +10,8 @@ public class Test {
         else{
             System.out.println("logged in failed");
         }
-        rsc.getTables();
+
+        String tableName = rsc.selectTable(1);
 
         int cateID = 1001;
         int[] cate = rsc.selectCategory(cateID);

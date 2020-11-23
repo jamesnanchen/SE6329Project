@@ -12,9 +12,10 @@ public class RestaurantSystemController {
         return edqs.validateUser(userID,password);
     }
 
-    public void getTables(){
-        System.out.println("Which table do you want to select?\n"+ Arrays.toString(tdqs.getTable()));
+    public String selectTable(int tableID){
+        return tdqs.getTable(tableID);
     }
+
     public void makeNewOrder(){
         this.order = new Order(orderID++);
     }
