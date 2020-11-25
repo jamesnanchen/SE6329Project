@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,4 +17,9 @@ public class CategoryList {
     public int[] getItemList(int cateID){
         return itemLists.get(cateID);
     }
+
+    public ArrayList<Integer> getCategoryList(){
+        return new ArrayList<Integer>(itemLists.keySet());
+    }
+
 }

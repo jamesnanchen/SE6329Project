@@ -1,18 +1,8 @@
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.ListSelectionModel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 import java.awt.*;
-import java.awt.event.*;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class RestaurantManagementInterface {
     public static void main(String[] args) {    
@@ -27,9 +17,12 @@ public class RestaurantManagementInterface {
         JTextField passwordText = placePasswordComponent(panel);
 
         JButton loginButton = new JButton("Login");
-        loginButton.setBounds(10, 80, 80, 25);
+        loginButton.setBounds(10, 100, 80, 25);
         panel.add(loginButton);
 
+        JLabel logInLabel = new JLabel("Hint: userID='1'; password = 'password01'");
+        logInLabel.setBounds(10,80,300,25);
+        panel.add(logInLabel);
         // Now that all components have been added, set the interface visibility to true
         frame.setVisible(true);
 
@@ -47,129 +40,97 @@ public class RestaurantManagementInterface {
 
         boolean login = RestaurantSystemController.login(intId, password);
 
+
         // If login is successful, proceed to selecting a table
         if (login) {
-            // Create new frame to select table
-            JFrame selectTableFrame = new JFrame("Restaurant Management System");
-            selectTableFrame.setSize(500, 300);
-            selectTableFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            showTable(frame);
 
-            JPanel tablePanel = new JPanel();    
-            selectTableFrame.add(tablePanel);
+        } else {
+            JOptionPane.showMessageDialog(frame, "Invalid login. Please try again.", "Restaurant Management System", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
-            JTextField tableText = placeTableComponent(tablePanel);
+    private static void showTable(JFrame frame){
+        ArrayList<Integer> tables =RestaurantSystemController.getTableList();
+        frame.getContentPane().removeAll();
 
-            JButton tableButton = new JButton("Select");
-            tableButton.setBounds(10, 80, 80, 25);
+        JPanel tablePanel = new JPanel();
+        tablePanel.setLayout(new GridLayout(4, 1,0,1));
+        for(int tableID:tables){
+            JButton tableButton = new JButton("Table "+tableID);
             tablePanel.add(tableButton);
-
-            selectTableFrame.setVisible(true);
-
-            tableButton.addActionListener(e -> attemptTableSelection(tableText));
-
-        } else {
-            JFrame errorFrame = new JFrame("Swing Tester");
-            errorFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            errorFrame.setSize(560, 200);      
-            errorFrame.setLocationRelativeTo(null);  
-            
-            JOptionPane.showMessageDialog(errorFrame, "Inavlid login. Please try again.", "Restaurant Management System", JOptionPane.ERROR_MESSAGE);
+            tableButton.addActionListener(e -> makeOrder(tableID, frame));
         }
+        
+        frame.add(tablePanel);
+        frame.repaint();
+        frame.setVisible(true);
     }
 
-    private static void attemptTableSelection(JTextField tableText) {
-        String tableId = tableText.getText();
-        Integer intTableId = Integer.parseInt(tableId);
 
-        // Boolean flag to keep track of whether the table was selected to proceed to the ordering stage
-        boolean tableSelected = false;
+    private static void makeOrder(int tableID, JFrame frame){
+        RestaurantSystemController.makeNewOrder();
+        frame.getContentPane().removeAll();
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(4 , 1));
+        JButton button = new JButton("Make new Order");
+        button.addActionListener(e -> showCate(tableID, frame));
 
-        String tableName;
-        try {
-            tableName = RestaurantSystemController.selectTable(intTableId);
-            tableSelected = true;
-        } catch (Exception e) {
-            System.out.println("ERROR: Unable to select table");
-        }
-
-        if (tableSelected) {
-            // Create a new frame to place an order
-            JFrame enterCategoryFrame = new JFrame("Restaurant Management System");
-            enterCategoryFrame.setSize(500, 300);
-            enterCategoryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-            JPanel categoryPanel = new JPanel();    
-            enterCategoryFrame.add(categoryPanel);
-
-            JTextField categoryText = placeCategoryComponent(categoryPanel);
-
-            JButton enterCategoryButton = new JButton("Enter");
-            enterCategoryButton.setBounds(10, 80, 80, 25);
-            categoryPanel.add(enterCategoryButton);
-
-            enterCategoryFrame.setVisible(true);
-
-            enterCategoryButton.addActionListener(e -> provideCategoryId(categoryText));
-            
-
-        } else {
-            JFrame errorFrame = new JFrame("Swing Tester");
-            errorFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            errorFrame.setSize(560, 200);      
-            errorFrame.setLocationRelativeTo(null);  
-            
-            JOptionPane.showMessageDialog(errorFrame, "Invalid table selection. Please try again.", "Restaurant Management System", JOptionPane.ERROR_MESSAGE);
-        }
+        panel.add(button);
+        frame.add(panel);
+        frame.repaint();
+        frame.setVisible(true);
     }
 
-    private static void provideCategoryId(JTextField categoryText) {
-        String categoryId = categoryText.getText();
-        int intCategoryId = Integer.parseInt(categoryId);
+    private static void showCate(int tableID, JFrame frame){
+        ArrayList<Integer> cateList = RestaurantSystemController.getCategoryList();
+        frame.getContentPane().removeAll();
+        JPanel categoryPanel = new JPanel();
+        frame.add(categoryPanel);
 
-        int[] cate = RestaurantSystemController.selectCategory(intCategoryId);
-
-        if (cate == null) {
-            System.out.println("TRY AGAIN");
-        } else {
-            String[] categoryItems = new String[cate.length];
-            for (int i = 0; i < cate.length; i++) {
-                categoryItems[i] = Integer.toString(cate[i]);
-            }
-
-            JFrame categoryFrame = new JFrame("Select Items");
-            categoryFrame.setSize(560,200);
-            categoryFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-            JList categoryList = new JList(categoryItems);
-            categoryList.setFixedCellHeight(15);
-            categoryList.setFixedCellWidth(100);
-            categoryList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-            categoryList.setVisibleRowCount(4);
-
-            categoryFrame.add(new JScrollPane(categoryList));
-
-            JButton placeOrderButton = new JButton("Place Order");
-            placeOrderButton.setBounds(100,50,165,25);
-            
-            categoryList.add(placeOrderButton);
-
-            placeOrderButton.addActionListener(e -> confirmOrder());
-
-            categoryFrame.setVisible(true);
+        for(int cateID:cateList){
+            JButton cateButton = new JButton("Category "+cateID);
+            categoryPanel.add(cateButton);
+            cateButton.addActionListener(e -> showItem(cateID,tableID,frame));
         }
+
+        frame.repaint();
+        frame.setVisible(true);
     }
 
-    private static void confirmOrder() {
-        JFrame orderPlacedFrame = new JFrame("Restaurant Management System");
-        orderPlacedFrame.setSize(500, 300);
-        orderPlacedFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    private static void showItem(int cateID, int tableID ,JFrame frame) {
+        int[] items = RestaurantSystemController.selectCategory(cateID);
+        frame.getContentPane().removeAll();
+        JPanel itemPanel = new JPanel();
+        itemPanel.setLayout(new GridLayout(12, 1));
+        frame.add(itemPanel);
 
-        JLabel orderLabel = new JLabel("Order placed.");
-        orderLabel.setBounds(10,20,80,25);
-        orderPlacedFrame.add(orderLabel);
+        JButton backToCateButton = new JButton("Back To Category");
+        itemPanel.add(backToCateButton);
+        backToCateButton.addActionListener(e->showCate(tableID,frame));
 
+        JButton finishOrderButton = new JButton("Finish Order");
+        itemPanel.add(finishOrderButton);
+        finishOrderButton.addActionListener(e->finishOrder(frame));
 
-        orderPlacedFrame.setVisible(true);
+        for(int itemID:items){
+            JButton itemButton = new JButton("Item "+itemID);
+            itemPanel.add(itemButton);
+            itemButton.addActionListener(e -> addItem(itemID,frame));
+        }
+
+        frame.repaint();
+        frame.setVisible(true);
+    }
+
+    private static void finishOrder(JFrame frame){
+        JOptionPane.showMessageDialog(frame, "Order has added into order queue!","Successful!",JOptionPane.PLAIN_MESSAGE );
+        showTable(frame);
+    }
+    private static void addItem(int i, JFrame frame) {
+        RestaurantSystemController.selectDesiredItem(i);
+        JOptionPane.showMessageDialog(frame, "item "+ i+" has added into order!","Successful!",JOptionPane.PLAIN_MESSAGE );
+        frame.setVisible(true);
     }
 
     private static JTextField placeUserComponent(JPanel panel) {
@@ -186,7 +147,6 @@ public class RestaurantManagementInterface {
         return userText;
     }
 
-
     private static JTextField placePasswordComponent(JPanel panel) {
         JLabel passwordLabel = new JLabel("Password");
         passwordLabel.setBounds(10,50,80,25);
@@ -199,27 +159,4 @@ public class RestaurantManagementInterface {
         return passwordText;
     }
 
-    private static JTextField placeTableComponent(JPanel panel) {
-        JLabel tableLabel = new JLabel("Enter Table ID");
-        tableLabel.setBounds(10,50,80,25);
-        panel.add(tableLabel);
-
-        JTextField tableText = new JTextField(20);
-        tableText.setBounds(100,50,165,25);
-        panel.add(tableText);
-
-        return tableText;
-    }
-
-    private static JTextField placeCategoryComponent(JPanel panel) {
-        JLabel categoryLabel = new JLabel("Enter Category ID");
-        categoryLabel.setBounds(10,50,80,25);
-        panel.add(categoryLabel);
-
-        JTextField categoryText = new JTextField(20);
-        categoryText.setBounds(100,50,165,25);
-        panel.add(categoryText);
-
-        return categoryText;
-    }
 }

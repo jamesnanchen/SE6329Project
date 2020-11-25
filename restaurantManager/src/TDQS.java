@@ -4,8 +4,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class TDQS {
 
@@ -17,6 +16,11 @@ public class TDQS {
         tables.put(3,"table03");
         tables.put(4,"table04");
     }
+
+    public ArrayList<Integer> getTableList(){
+        return new ArrayList<Integer>(tables.keySet());
+    }
+
 
     public String getTable(int tableID) throws Exception {
         URL url = new URL("https://ceysk6d6f4.execute-api.us-east-1.amazonaws.com/v1/tdqs/gettable/");

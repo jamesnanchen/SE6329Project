@@ -1,11 +1,11 @@
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class RestaurantSystemController {
     private static final CategoryList cateList = new CategoryList();
     private static final EDQS edqs = new EDQS();
     private static final TDQS tdqs = new TDQS();
-    private Order order;
-    private int orderID = 1;
+    private static Order order;
+    private static int orderID = 1;
     private final OrderQueue orderQueue = new OrderQueue();
 
     public static boolean login(int userID, String password){
@@ -17,26 +17,33 @@ public class RestaurantSystemController {
             return false;
         }
     }
+    public static ArrayList<Integer> getTableList(){
+        return tdqs.getTableList();
+    }
 
     public static String selectTable(int tableID) throws Exception {
         return tdqs.getTable(tableID);
     }
 
-    public void makeNewOrder(){
-        this.order = new Order(orderID++);
+    public static void makeNewOrder(){
+        order = new Order(orderID++);
+    }
+
+    public static ArrayList<Integer> getCategoryList(){
+        return cateList.getCategoryList();
     }
 
     public static int[] selectCategory(int cateID){
         return cateList.getItemList(cateID);
     }
 
-    public void selectDesiredItem(int itemID){
-        this.order.makeLineItem(itemID);
+    public static void selectDesiredItem(int itemID){
+        order.makeLineItem(itemID);
     }
 
     public void finishOrder(){
-        orderQueue.addOrderIntoOrderQueue(this.order);
-        this.order.sentToQueue();
+        orderQueue.addOrderIntoOrderQueue(order);
+        order.sentToQueue();
         orderQueue.showQueue();
     }
 }
