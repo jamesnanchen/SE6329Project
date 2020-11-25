@@ -3,7 +3,7 @@ import java.util.Arrays;
 public class RestaurantSystemController {
     private final CategoryList cateList = new CategoryList();
     private static final EDQS edqs = new EDQS();
-    private final TDQS tdqs = new TDQS();
+    private static final TDQS tdqs = new TDQS();
     private Order order;
     private int orderID = 1;
     private final OrderQueue orderQueue = new OrderQueue();
@@ -12,7 +12,7 @@ public class RestaurantSystemController {
         return edqs.validateUser(userID,password);
     }
 
-    public String selectTable(int tableID){
+    public static String selectTable(int tableID){
         return tdqs.getTable(tableID);
     }
 
