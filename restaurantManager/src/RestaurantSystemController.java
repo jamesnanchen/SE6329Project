@@ -2,13 +2,13 @@ import java.util.Arrays;
 
 public class RestaurantSystemController {
     private final CategoryList cateList = new CategoryList();
-    private final EDQS edqs = new EDQS();
+    private static final EDQS edqs = new EDQS();
     private final TDQS tdqs = new TDQS();
     private Order order;
     private int orderID = 1;
     private final OrderQueue orderQueue = new OrderQueue();
 
-    public boolean login(int userID, String password){
+    public static boolean login(int userID, String password){
         return edqs.validateUser(userID,password);
     }
 
