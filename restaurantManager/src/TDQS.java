@@ -18,7 +18,7 @@ public class TDQS {
     }
 
     public ArrayList<Integer> getTableList(){
-        return new ArrayList<Integer>(tables.keySet());
+        return new ArrayList<>(tables.keySet());
     }
 
 
