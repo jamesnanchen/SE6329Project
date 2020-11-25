@@ -11,7 +11,12 @@ public class Test {
             System.out.println("logged in failed");
         }
 
-        String tableName = rsc.selectTable(1);
+        String tableName;
+        try {
+            tableName = rsc.selectTable(1);
+        } catch (Exception e) {
+            System.out.println("ERROR: Unable to get table id.");
+        }
 
         int cateID = 1001;
         int[] cate = rsc.selectCategory(cateID);
