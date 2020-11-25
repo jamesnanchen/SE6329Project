@@ -8,15 +8,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EDQS {
-    private final Map<Integer,String> employeeList = new HashMap<>();
-
-    public EDQS(){
-        int[] employeeIDs = new int[]{1,2,3};
-        String[] passwords = {"password01","password02","password03"};
-        for(int i =0;i<3;i++){
-            employeeList.put(employeeIDs[i],passwords[i]);
-        }
-    }
+//    private final Map<Integer,String> employeeList = new HashMap<>();
+//
+//    public EDQS(){
+//        int[] employeeIDs = new int[]{1,2,3};
+//        String[] passwords = {"password01","password02","password03"};
+//        for(int i =0;i<3;i++){
+//            employeeList.put(employeeIDs[i],passwords[i]);
+//        }
+//    }
 
     public boolean validateUser(int userID, String password) throws Exception{
         URL url = new URL("https://ceysk6d6f4.execute-api.us-east-1.amazonaws.com/v1/edqs/validateuser");
@@ -48,7 +48,7 @@ public class EDQS {
         // InputStream xml = httpConnection.getInputStream();
 
         if (httpConnection.getResponseCode() == 200) {
-            return sb.toString().substring(25,29).equals("true");
+            return sb.substring(25,29).equals("true");
         }
         return false;
     }

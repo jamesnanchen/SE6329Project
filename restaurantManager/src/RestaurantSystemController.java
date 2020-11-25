@@ -6,10 +6,9 @@ public class RestaurantSystemController {
     private static final TDQS tdqs = new TDQS();
     private static Order order;
     private static int orderID = 1;
-    private final OrderQueue orderQueue = new OrderQueue();
+    private final static OrderQueue orderQueue = new OrderQueue();
 
     public static boolean login(int userID, String password){
-        boolean loginStatus = false;
         try {
             return edqs.validateUser(userID,password);
         } catch (Exception e){
@@ -41,9 +40,13 @@ public class RestaurantSystemController {
         order.makeLineItem(itemID);
     }
 
-    public void finishOrder(){
+    public static void finishOrder() {
         orderQueue.addOrderIntoOrderQueue(order);
         order.sentToQueue();
         orderQueue.showQueue();
+        try{
+            System.out.println(tdqs.getTable(1));
+        }catch (Exception ignored){
+        }
     }
 }

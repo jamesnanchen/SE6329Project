@@ -29,7 +29,7 @@ public class Order {
     @Override
     public String toString() {
         return "{ orderNumber: " +
-                this.orderID +" "+orderList +
+                this.orderID +"; Items in order: "+orderList +
                 '}';
     }
 }

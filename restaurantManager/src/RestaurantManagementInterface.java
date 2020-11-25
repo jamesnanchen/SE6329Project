@@ -61,7 +61,7 @@ public class RestaurantManagementInterface {
             tablePanel.add(tableButton);
             tableButton.addActionListener(e -> makeOrder(tableID, frame));
         }
-        
+
         frame.add(tablePanel);
         frame.repaint();
         frame.setVisible(true);
@@ -86,6 +86,7 @@ public class RestaurantManagementInterface {
         ArrayList<Integer> cateList = RestaurantSystemController.getCategoryList();
         frame.getContentPane().removeAll();
         JPanel categoryPanel = new JPanel();
+        categoryPanel.setLayout(new GridLayout(2, 1,0,1));
         frame.add(categoryPanel);
 
         for(int cateID:cateList){
@@ -124,6 +125,7 @@ public class RestaurantManagementInterface {
     }
 
     private static void finishOrder(JFrame frame){
+        RestaurantSystemController.finishOrder();
         JOptionPane.showMessageDialog(frame, "Order has added into order queue!","Successful!",JOptionPane.PLAIN_MESSAGE );
         showTable(frame);
     }
