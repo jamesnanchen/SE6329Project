@@ -12,7 +12,7 @@ public class RestaurantSystemController {
         return edqs.validateUser(userID,password);
     }
 
-    public static String selectTable(int tableID){
+    public static String selectTable(int tableID) throws Exception {
         return tdqs.getTable(tableID);
     }
 

@@ -63,8 +63,12 @@ public class RestaurantManagementInterface {
             String tableId = tableText.getText();
             Integer intTableId = Integer.parseInt(tableId);
 
-
-            String tableName = RestaurantSystemController.selectTable(intTableId);
+            String tableName;
+            try {
+                tableName = RestaurantSystemController.selectTable(intTableId);
+            } catch (Exception e) {
+                System.out.println("ERROR: Unable to select table");
+            }
 
             //System.out.println(tableName);
 
