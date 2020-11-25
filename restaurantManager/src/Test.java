@@ -14,6 +14,7 @@ public class Test {
         String tableName;
         try {
             tableName = rsc.selectTable(1);
+            System.out.println(tableName);
         } catch (Exception e) {
             System.out.println("ERROR: Unable to get table id.");
         }

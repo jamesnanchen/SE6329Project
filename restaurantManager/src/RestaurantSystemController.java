@@ -9,7 +9,13 @@ public class RestaurantSystemController {
     private final OrderQueue orderQueue = new OrderQueue();
 
     public static boolean login(int userID, String password){
-        return edqs.validateUser(userID,password);
+        boolean loginStatus = false;
+        try {
+            return edqs.validateUser(userID,password);
+        } catch (Exception e){
+            System.out.println(e);
+            return false;
+        }
     }
 
     public static String selectTable(int tableID) throws Exception {

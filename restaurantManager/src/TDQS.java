@@ -41,12 +41,27 @@ public class TDQS {
             sb.append(line+"\n");
         }
         br.close();
+
         System.out.println(sb.toString());
 
         System.out.println(httpConnection.getResponseCode());
         System.out.println(httpConnection.getResponseMessage());
-
         // InputStream xml = httpConnection.getInputStream();
-        return url.getPath();
+
+        if (httpConnection.getResponseCode() == 200) {
+            return getDataFromJSON(sb.toString());
+        } else {
+            return httpConnection.getResponseMessage();
+        }
+    }
+
+    private String getDataFromJSON(String json) {
+        int index = 0;
+        for (int i = 26; i < json.length(); i++) {
+            if (json.substring(i,i+1).equals("\"")) {
+                index = i;
+            }
+        }
+        return json.substring(26, index);
     }
 }
