@@ -44,9 +44,5 @@ public class RestaurantSystemController {
         orderQueue.addOrderIntoOrderQueue(order);
         order.sentToQueue();
         orderQueue.showQueue();
-        try{
-            System.out.println(tdqs.getTable(1));
-        }catch (Exception ignored){
-        }
     }
 }
