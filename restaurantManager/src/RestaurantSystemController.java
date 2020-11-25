@@ -1,7 +1,7 @@
 import java.util.Arrays;
 
 public class RestaurantSystemController {
-    private final CategoryList cateList = new CategoryList();
+    private static final CategoryList cateList = new CategoryList();
     private static final EDQS edqs = new EDQS();
     private static final TDQS tdqs = new TDQS();
     private Order order;
@@ -26,7 +26,7 @@ public class RestaurantSystemController {
         this.order = new Order(orderID++);
     }
 
-    public int[] selectCategory(int cateID){
+    public static int[] selectCategory(int cateID){
         return cateList.getItemList(cateID);
     }
 
