@@ -20,7 +20,7 @@ public class Test {
         }
 
         int cateID = 1001;
-        int[] cate = rsc.selectCategory(cateID);
+        
         System.out.println("Here are the items in category: "+cateID+"\n"+Arrays.toString(cate));
 
         rsc.makeNewOrder();
