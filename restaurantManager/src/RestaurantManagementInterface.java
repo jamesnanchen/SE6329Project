@@ -126,12 +126,12 @@ public class RestaurantManagementInterface {
 
     private static void finishOrder(JFrame frame){
         RestaurantSystemController.finishOrder();
-        JOptionPane.showMessageDialog(frame, "Order has added into order queue!","Successful!",JOptionPane.PLAIN_MESSAGE );
+        JOptionPane.showMessageDialog(frame, "Order has been added into order queue!","Successful!",JOptionPane.PLAIN_MESSAGE );
         showTable(frame);
     }
     private static void addItem(int i, JFrame frame) {
         RestaurantSystemController.selectDesiredItem(i);
-        JOptionPane.showMessageDialog(frame, "item "+ i+" has added into order!","Successful!",JOptionPane.PLAIN_MESSAGE );
+        JOptionPane.showMessageDialog(frame, "item "+ i+" has been added into order!","Successful!",JOptionPane.PLAIN_MESSAGE );
         frame.setVisible(true);
     }
 
